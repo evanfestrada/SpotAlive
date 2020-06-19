@@ -13,20 +13,22 @@ token = util.prompt_for_user_token(username,
                            client_secret='583e43282a7e4016b7e9f90c5fd61e51',
                            redirect_uri='http://localhost:8888/callback')
 
+top_artists = []
+#Get top 20 artists in three ranges without duplicates
 if token:
     sp = spotipy.Spotify(auth=token)
     for sp_range in ['short_term', 'medium_term', 'long_term']:
-        print("range:", sp_range)
-
         results = sp.current_user_top_artists(time_range=sp_range, limit=20)
+        for item in results['items']:
+            if (item['name'] not in top_artists):
+                top_artists.append(item['name'])
 
-        for i, item in enumerate(results['items']):
-            print(i, item['name'])
-        print()
+    print(top_artists)
+    print(len(top_artists))
 else:
     print("Can't get token for", username)
 
+
+
     
-
-
 
