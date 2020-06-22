@@ -4,8 +4,6 @@ import sys
 from spotipy.oauth2 import SpotifyClientCredentials
 import spotipy.util as util
 
-
-
 #Get top Spotify artists
 def get_top_artists():
     username = 'silvertone31'
@@ -31,6 +29,18 @@ def get_top_artists():
         return None
 
 
+#Check for concerts for top artists
+def get_upcoming_concerts(artists):
+    # artists = artists
+
+    response = requests.get('https://api.songkick.com/api/3.0/artists/379603/gigography.json?apikey=X4adldhma4pF3yAI')
+    response.json()
+
+    print(response.text)
+
+
 #Main Function
 if __name__ == "__main__":
-    get_top_artists()
+    # get_upcoming_concerts(get_top_artists())
+    get_upcoming_concerts(['Band of Horses', 'Incubus', 'The Killers'])
+
