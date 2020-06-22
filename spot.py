@@ -31,16 +31,26 @@ def get_top_artists():
 
 #Check for concerts for top artists
 def get_upcoming_concerts(artists):
-    # artists = artists
 
-    response = requests.get('https://api.songkick.com/api/3.0/artists/379603/gigography.json?apikey=X4adldhma4pF3yAI')
-    response.json()
+    payload = {'api_key': 'X4adldhma4pF3yAI', 'metro_area_id' : 9179 }
 
-    print(response.text)
+    #API Request for getting metro_area_id
+    #metro_response = requests.get("https://api.songkick.com/api/3.0/search/locations.json?query='Austin'&apikey=X4adldhma4pF3yAI")
+    # Austin: 9179, San Antonio: 7554, Dallas: 35129
+
+    events_response = requests.get('https://api.songkick.com/api/3.0/metro_areas/9179/calendar.json?apikey=X4adldhma4pF3yAI')
+    
+    r_dict = events_response.json()
+
+    for i in r_dict['resultsPage']['results']['event']:
+        for j in i['performance']:
+            print(j['artist']['displayName'])
+
+    # print(r_dict['resultsPage']['results']['event'])
 
 
 #Main Function
 if __name__ == "__main__":
     # get_upcoming_concerts(get_top_artists())
-    get_upcoming_concerts(['Band of Horses', 'Incubus', 'The Killers'])
+    get_upcoming_concerts([])
 
