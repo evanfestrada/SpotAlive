@@ -3,6 +3,7 @@ import spotipy
 import sys
 from spotipy.oauth2 import SpotifyClientCredentials
 import spotipy.util as util
+from datetime import date, time, datetime
 
 #Get top Spotify artists
 def get_top_artists():
@@ -47,6 +48,8 @@ def get_upcoming_concerts(artists):
             print(j['artist']['displayName'])
 
     # print(r_dict['resultsPage']['results']['event'])
+
+    print(date.today())
 
 
 #Main Function
