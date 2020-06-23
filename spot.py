@@ -3,7 +3,7 @@ import spotipy
 import sys
 from spotipy.oauth2 import SpotifyClientCredentials
 import spotipy.util as util
-from datetime import date, time, datetime
+from datetime import date, time, datetime, timedelta
 
 #Get top Spotify artists
 def get_top_artists():
@@ -33,6 +33,10 @@ def get_top_artists():
 #Check for concerts for top artists
 def get_upcoming_concerts(artists):
 
+    current_date =  date.today()
+
+    later_date = current_date + timedelta(60)
+
     payload = {'api_key': 'X4adldhma4pF3yAI', 'metro_area_id' : 9179 }
 
     #API Request for getting metro_area_id
@@ -48,8 +52,6 @@ def get_upcoming_concerts(artists):
             print(j['artist']['displayName'])
 
     # print(r_dict['resultsPage']['results']['event'])
-
-    print(date.today())
 
 
 #Main Function
