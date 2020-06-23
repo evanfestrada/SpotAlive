@@ -35,26 +35,31 @@ def get_upcoming_concerts(artists):
 
     current_date =  date.today()
 
-    max_date = current_date + timedelta(10)
+    max_date = current_date + timedelta(90)
 
-    metro_area_id = 9179
+    metro_area_id = '9179'
 
     payload = {'min_date': current_date, 'max_date': max_date}
 
+    songkick_api_key = 'X4adldhma4pF3yAI'
 
     #API Request for getting metro_area_id
     #metro_response = requests.get("https://api.songkick.com/api/3.0/search/locations.json?query='Austin'&apikey=X4adldhma4pF3yAI")
     # Austin: 9179, San Antonio: 7554, Dallas: 35129
 
-    events_response = requests.get('https://api.songkick.com/api/3.0/metro_areas/9179/calendar.json?apikey=X4adldhma4pF3yAI')
+    metro_uri ='https://api.songkick.com/api/3.0/metro_areas/' + metro_area_id + '/calendar.json?apikey=' + songkick_api_key + '&min_date=' + str(current_date) + '&max_date=' + str(max_date)
 
-    # events_response = requests.get('https://api.songkick.com/api/3.0/metro_areas/' + str(metro_area_id) + '/calendar.json', data=payload)
-    
+    events_response = requests.get(metro_uri)
+
     r_dict = events_response.json()
+
+    count = 0
 
     for i in r_dict['resultsPage']['results']['event']:
         for j in i['performance']:
             print(j['artist']['displayName'])
+            count+=1
+    print(count)
 
     # print(r_dict['resultsPage']['results']['event'])
 
