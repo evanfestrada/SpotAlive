@@ -55,13 +55,13 @@ def get_upcoming_concerts(artists):
 
     count = 0
 
+
     for i in r_dict['resultsPage']['results']['event']:
         for j in i['performance']:
             print(j['artist']['displayName'])
             count+=1
-    print(count)
-
-    # print(r_dict['resultsPage']['results']['event'])
+    print(r_dict['resultsPage']['page'])
+    # print(count)
 
 
 #Main Function
