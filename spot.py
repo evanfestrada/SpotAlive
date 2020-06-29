@@ -33,7 +33,6 @@ def get_top_artists():
 
 #Check for concerts for top artists
 def get_upcoming_concerts(artists):
-    
     current_date =  date.today()
     max_date = current_date + timedelta(90)
     metro_area_id = '9179' # Austin: 9179, San Antonio: 7554, Dallas: 35129
@@ -42,25 +41,22 @@ def get_upcoming_concerts(artists):
     #API Request for getting metro_area_id
     #metro_response = requests.get("https://api.songkick.com/api/3.0/search/locations.json?query='Austin'&apikey={apikey}")
     
-    metro_uri ='https://api.songkick.com/api/3.0/metro_areas/' + metro_area_id + '/calendar.json?apikey=' + songkick_api_key + '&min_date=' + str(current_date) + '&max_date=' + str(max_date)
-
-    events_response = requests.get(metro_uri)
-
-    r_dict = events_response.json()
-
     count = 0
+    page = 1
+    for page in range (1,4):
+        metro_uri ='https://api.songkick.com/api/3.0/metro_areas/' + metro_area_id + '/calendar.json?apikey=' \
+                + songkick_api_key + '&min_date=' + str(current_date) + '&max_date=' + str(max_date) + '&page=' + str(page)
 
+        events_response = requests.get(metro_uri)
 
-    for i in r_dict['resultsPage']['results']['event']:
-        for j in i['performance']:
-            print(j['artist']['displayName'])
-            count+=1
-    print(r_dict['resultsPage']['page'])
-    # print(count)
+        r_dict = events_response.json()
 
+        for i in r_dict['resultsPage']['results']['event']:
+            for j in i['performance']:
+                print(j['artist']['displayName'])
 
 #Main Function
 if __name__ == "__main__":
-    # get_upcoming_concerts(get_top_artists())
-    get_upcoming_concerts([])
+    # top_artists = get_top_artists()
+    get_upcoming_concerts()
 
