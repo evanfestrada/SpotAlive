@@ -35,6 +35,7 @@ def get_top_artists():
 
 #Check for concerts for top artists
 def get_upcoming_concerts():
+    upcoming_concerts = []
     current_date =  date.today()
     max_date = current_date + timedelta(90)
     metro_area_id = sk_config.metro_area_id # Austin: 9179, San Antonio: 7554, Dallas: 35129
@@ -50,15 +51,27 @@ def get_upcoming_concerts():
                 + api_key + '&min_date=' + str(current_date) + '&max_date=' + str(max_date) + '&page=' + str(page)
 
         events_response = requests.get(metro_uri)
-
         r_dict = events_response.json()
 
         for i in r_dict['resultsPage']['results']['event']:
             for j in i['performance']:
-                print(j['artist']['displayName'])
+                upcoming_concerts.append((j['artist']['displayName']))
+        
+    return upcoming_concerts
+
+def compare(top_artists, concerts):
+    matches = list(set(top_artists) & set(concerts))
+    return matches
 
 #Main Function
+
+def main():
+    top_artists = get_top_artists()
+    upcoming_concerts = get_upcoming_concerts()
+    matches = compare(top_artists, upcoming_concerts)
+    print(matches)
+
+
 if __name__ == "__main__":
-    # top_artists = get_top_artists()
-    get_upcoming_concerts()
+    main()
 
