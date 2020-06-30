@@ -34,7 +34,7 @@ def get_top_artists():
 
 
 #Check for concerts for top artists
-def get_upcoming_concerts():
+def get_upcoming_concerts(top_artists):
     upcoming_concerts = []
     current_date =  date.today()
     max_date = current_date + timedelta(90)
@@ -55,21 +55,19 @@ def get_upcoming_concerts():
 
         for i in r_dict['resultsPage']['results']['event']:
             for j in i['performance']:
-                upcoming_concerts.append((j['artist']['displayName']))
-        
+                # upcoming_concerts.append((j['artist']['displayName']))
+                if j['artist']['displayName'] in top_artists:
+                    upcoming_concerts.append(i)
+
     return upcoming_concerts
 
-def compare(top_artists, concerts):
-    matches = list(set(top_artists) & set(concerts))
-    return matches
 
 #Main Function
 
 def main():
     top_artists = get_top_artists()
-    upcoming_concerts = get_upcoming_concerts()
-    matches = compare(top_artists, upcoming_concerts)
-    print(matches)
+    upcoming_concerts_obj = get_upcoming_concerts(top_artists)
+    print(upcoming_concerts_obj)
 
 
 if __name__ == "__main__":
