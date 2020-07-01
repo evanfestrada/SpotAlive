@@ -44,6 +44,8 @@ def get_upcoming_concerts(top_artists):
     #API Request for getting metro_area_id
     #metro_response = requests.get("https://api.songkick.com/api/3.0/search/locations.json?query='Austin'&apikey={apikey}")
     
+    count = 0
+    page = 1
     for page in range (1,4):
         metro_uri ='https://api.songkick.com/api/3.0/metro_areas/' + metro_area_id + '/calendar.json?apikey=' \
                 + api_key + '&min_date=' + str(current_date) + '&max_date=' + str(max_date) + '&page=' + str(page)
@@ -59,17 +61,14 @@ def get_upcoming_concerts(top_artists):
 
     return upcoming_concerts
 
-def print_info(shows):
-    for show in shows:
-        print(show['displayName'])
-
 
 #Main Function
 
 def main():
     top_artists = get_top_artists()
     upcoming_concerts_obj = get_upcoming_concerts(top_artists)
-    print_info(upcoming_concerts_obj)
+    print(upcoming_concerts_obj)
+
 
 if __name__ == "__main__":
     main()
