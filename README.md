@@ -1,51 +1,52 @@
 # SpotAlive
 
->  SpotAlive is an application that allows Spotify users to sign in to their Spotify account and receive a list of concerts in their metro area from their top artists.
+>  SpotAlive is an application that provides users with upcoming concerts for their favorite Spotify artists.
 
 
 ## Table of contents
-* [General info](#general-info)
-* [Screenshots](#screenshots)
+<!-- * [General info](#general-info) -->
+<!-- * [Screenshots](#screenshots) -->
+<!-- * [Setup](#setup) -->
+<!-- * [Features](#features) -->
 * [Technologies](#technologies)
-* [Setup](#setup)
-* [Features](#features)
 * [Status](#status)
 * [Inspiration](#inspiration)
 * [Contact](#contact)
 
-## General info
+<!-- ## General info -->
 
-## Screenshots
+<!-- ## Screenshots -->
 
 ## Technologies
 
-Python
+[Python 3](https://www.python.org/)
 
 ### Libraries
 
-Spotipy
-Requests
+[Spotipy](https://spotipy.readthedocs.io/en/2.13.0)
+
+[Requests](https://requests.readthedocs.io/en/master/)
 
 ### APIs
 
-Spotify Web API
+[Spotify Web API](https://developer.spotify.com/documentation/web-api/)
 
-SongKick API
+[SongKick Concerts and Festivals API](https://www.songkick.com/developer)
 
-## Setup
+<!-- ## Setup -->
 
-## Features
+<!-- ## Features -->
+
 
 ## Status
 
 In Progress
 
-
-
-
-
 ## Inspiration
-Project inspired by our team's weak mixing skills, based on the idea of backward searching.
+This project was inspired by my love for live music
+as well as all the concerts that I've regrettably missed. 
 
 ## Contact
 Created by Evan Estrada
+
+[email](mailto:evanfestrada@gmail.com)
