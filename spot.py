@@ -50,7 +50,6 @@ def get_upcoming_concerts(top_artists):
     metro_area_id = get_metro_area_id()
     api_key = sk_config.api_key 
 
-    count = 0
     page = 1
     for page in range (1,4):
         metro_uri ='https://api.songkick.com/api/3.0/metro_areas/' + str(metro_area_id) + '/calendar.json?apikey=' \
