@@ -5,6 +5,7 @@ from spotipy.oauth2 import SpotifyClientCredentials
 import spotipy.util as util
 from datetime import date, time, datetime, timedelta
 import json
+import smtplib, ssl
 import sp_config
 import sk_config
 
@@ -32,22 +33,27 @@ def get_top_artists():
         print("Can't get token for", username)
         return None
 
+# A function for finding the metro area id for specific cities or metro areas
+def get_metro_area_id():
+    area = 'Seattle'
+    metro_response = requests.get(f'https://api.songkick.com/api/3.0/search/locations.json?query={area}&apikey={sk_config.api_key}')
+    metro_dict = metro_response.json()
+    for i in metro_dict['resultsPage']['results']['location']:
+        area_id = i['metroArea']['id']
+    return area_id
 
 #Check for concerts for top artists
 def get_upcoming_concerts(top_artists):
     upcoming_concerts = []
     current_date =  date.today()
     max_date = current_date + timedelta(90)
-    metro_area_id = sk_config.metro_area_id # Austin: 9179, San Antonio: 7554, Dallas: 35129
+    metro_area_id = get_metro_area_id()
     api_key = sk_config.api_key 
 
-    #API Request for getting metro_area_id
-    #metro_response = requests.get("https://api.songkick.com/api/3.0/search/locations.json?query='Austin'&apikey={apikey}")
-    
     count = 0
     page = 1
     for page in range (1,4):
-        metro_uri ='https://api.songkick.com/api/3.0/metro_areas/' + metro_area_id + '/calendar.json?apikey=' \
+        metro_uri ='https://api.songkick.com/api/3.0/metro_areas/' + str(metro_area_id) + '/calendar.json?apikey=' \
                 + api_key + '&min_date=' + str(current_date) + '&max_date=' + str(max_date) + '&page=' + str(page)
 
         events_response = requests.get(metro_uri)
@@ -65,9 +71,12 @@ def get_upcoming_concerts(top_artists):
 #Main Function
 
 def main():
+    # get_metro_area_id()
     top_artists = get_top_artists()
     upcoming_concerts_obj = get_upcoming_concerts(top_artists)
-    print(upcoming_concerts_obj)
+    for i in upcoming_concerts_obj:
+        print(i['displayName'])
+
 
 
 if __name__ == "__main__":
