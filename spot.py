@@ -8,6 +8,7 @@ import json
 import smtplib, ssl
 import sp_config
 import sk_config
+import mail_config
 
 #Get top Spotify artists
 def get_top_artists():
@@ -67,15 +68,30 @@ def get_upcoming_concerts(top_artists):
     return upcoming_concerts
 
 
-#Main Function
+def send_email(msg):
+    port = mail_config.port
+    smtp_server = mail_config.smtp_server
+    sender_email = mail_config.sender_email
+    receiver_email = mail_config.receiver_email
+    password = mail_config.password
 
+    subject = 'SpotAlive Alert: New Concert'
+    message = 'Subject: {}\n\n{}'.format(subject, msg)
+    
+    context = ssl.create_default_context()
+    with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
+        server.login(sender_email, password)
+        server.sendmail(sender_email, receiver_email, message)
+
+
+#Main Function
 def main():
     # get_metro_area_id()
     top_artists = get_top_artists()
     upcoming_concerts_obj = get_upcoming_concerts(top_artists)
     for i in upcoming_concerts_obj:
-        print(i['displayName'])
-
+        message = str(i['displayName'])
+        send_email(message)
 
 
 if __name__ == "__main__":
