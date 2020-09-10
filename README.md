@@ -2,6 +2,8 @@
 
 >  SpotAlive is an application that provides users with upcoming concerts for their favorite Spotify artists.
 
+![SpotAlive Email Example](/images/example.png)
+
 
 ## Table of contents
 <!-- * [General info](#general-info) -->
