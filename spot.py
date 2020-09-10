@@ -10,6 +10,7 @@ import sp_config
 import sk_config
 import mail_config
 
+
 #Get top Spotify artists
 def get_top_artists():
     username = sp_config.username
@@ -34,6 +35,7 @@ def get_top_artists():
         print("Can't get token for", username)
         return None
 
+
 # A function for finding the metro area id for specific cities or metro areas
 def get_metro_area_id():
     area = 'Seattle'
@@ -43,11 +45,12 @@ def get_metro_area_id():
         area_id = i['metroArea']['id']
     return area_id
 
+
 #Check for concerts for top artists
 def get_upcoming_concerts(top_artists):
     upcoming_concerts = []
     current_date =  date.today()
-    max_date = current_date + timedelta(90)
+    max_date = current_date + timedelta(120)
     metro_area_id = get_metro_area_id()
     api_key = sk_config.api_key 
 
@@ -89,11 +92,13 @@ def main():
     # get_metro_area_id()
     top_artists = get_top_artists()
     upcoming_concerts_obj = get_upcoming_concerts(top_artists)
-    for i in upcoming_concerts_obj:
-        message = str(i['displayName'])
-        send_email(message)
-
-
+    if not upcoming_concerts_obj:
+        print('no upcoming concerts')
+    else:
+        for i in upcoming_concerts_obj:
+            message = str(i['displayName'])
+            send_email(message)
+        
 if __name__ == "__main__":
     main()
 
